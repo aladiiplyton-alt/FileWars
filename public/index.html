@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DropPaste — файлы между устройствами</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      color: #e0e0e0;
+      min-height: 100vh;
+    }
+
+    .glass {
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Navbar */
+    nav {
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      cursor: pointer;
+    }
+    .nav-right {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .room-code {
+      font-family: 'Courier New', monospace;
+      background: rgba(99,102,241,0.15);
+      color: #818cf8;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 3px;
+    }
+    button, .btn-sm {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary-sm {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+    }
+    .btn-ghost {
+      background: rgba(255,255,255,0.06);
+      color: #aaa;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.1); color: white; }
+
+    /* Landing */
+    .landing {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .landing-box {
+      text-align: center;
+      max-width: 480px;
+      padding: 56px 40px;
+      border-radius: 20px;
+    }
+    .landing-box .logo-icon { font-size: 56px; margin-bottom: 12px; }
+    .landing-box h1 {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .landing-box .sub {
+      color: #666;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .btn-big {
+      padding: 14px 36px;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .btn-big:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(99,102,241,0.3);
+    }
+    .features {
+      margin-top: 36px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .features span {
+      color: #666;
+      font-size: 13px;
+    }
+
+    /* Room */
+    .room { display: none; }
+    .room.active { display: block; }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 700px) { main { grid-template-columns: 1fr; } }
+
+    .panel {
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .panel-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge {
+      background: rgba(255,255,255,0.06);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      color: #888;
+      margin-left: auto;
+    }
+
+    /* Upload */
+    .drop-zone {
+      border: 2px dashed rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 16px;
+    }
+    .drop-zone:hover, .drop-zone.over {
+      border-color: #6366f1;
+      background: rgba(99,102,241,0.05);
+    }
+    .drop-zone .icon { font-size: 32px; margin-bottom: 8px; }
+    .drop-zone p { color: #888; font-size: 13px; }
+    .drop-zone .hl { color: #818cf8; font-weight: 600; }
+
+    input[type="text"], input[type="url"] {
+      width: 100%;
+      padding: 10px 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      color: #e0e0e0;
+      font-size: 14px;
+      outline: none;
+    }
+    input:focus { border-color: #6366f1; }
+
+    /* Items */
+    .items { display: flex; flex-direction: column; gap: 6px; }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.2s;
+    }
+    .item:hover { background: rgba(255,255,255,0.04); }
+    .item-emoji {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .item-body { flex: 1; min-width: 0; }
+    .item-name {
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .item-name a { color: #c084fc; text-decoration: none; }
+    .item-meta { font-size: 11px; color: #555; margin-top: 2px; }
+    .item-actions { display: flex; gap: 4px; flex-shrink: 0; }
+    .btn-xs {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .btn-dl { background: rgba(99,102,241,0.15); color: #818cf8; }
+    .btn-dl:hover { background: rgba(99,102,241,0.25); }
+    .btn-open { background: rgba(168,85,247,0.15); color: #c084fc; }
+    .btn-open:hover { background: rgba(168,85,247,0.25); }
+    .btn-del { background: rgba(255,255,255,0.06); color: #555; }
+    .btn-del:hover { background: rgba(239,68,68,0.15); color: #f87171; }
+
+    .empty {
+      text-align: center;
+      padding: 28px 16px;
+      color: #444;
+      font-size: 13px;
+    }
+    .empty .ico { font-size: 36px; margin-bottom: 8px; }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .row > *:last-child { flex-shrink: 0; }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 10px 22px;
+      border-radius: 12px;
+      font-size: 13px;
+      color: #aaa;
+      opacity: 0;
+      transition: all 0.3s;
+      pointer-events: none;
+      z-index: 100;
+    }
+    .toast-msg.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast-msg.ok { color: #4ade80; border-color: rgba(34,197,94,0.3); }
+    .toast-msg.err { color: #f87171; border-color: rgba(239,68,68,0.3); }
+
+    #fileInput { display: none; }
+    .row .btn-submit {
+      width: auto;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== LANDING ===== -->
+<div class="landing" id="landing">
+  <div class="landing-box glass">
+    <div class="logo-icon">⬡</div>
+    <h1>DropPaste</h1>
+    <p class="sub">Обменивайтесь файлами и ссылками между устройствами.
+      <br>Никаких аккаунтов — только 6-значный код.</p>
+    <button class="btn-big" onclick="createRoom()" style="margin-bottom:16px;">
+      Создать комнату
+    </button>
+
+    <div style="color:#555;font-size:13px;margin-bottom:8px;">Или введите код комнаты:</div>
+    <div style="display:flex;gap:8px;justify-content:center;">
+      <input type="text" id="joinCode" placeholder="ABCDEF" maxlength="6"
+        style="width:140px;text-align:center;font-family:monospace;font-size:18px;letter-spacing:4px;
+               padding:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+               border-radius:10px;color:#e0e0e0;outline:none;">
+      <button class="btn-big" onclick="joinRoom()" style="padding:10px 24px;font-size:14px;">Войти</button>
+    </div>
+    <script>
+      document.getElementById('joinCode').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') joinRoom();
+      });
+      function joinRoom() {
+        const c = document.getElementById('joinCode').value.trim().toUpperCase();
+        if (c.length === 6) window.location.href = '/' + c;
+      }
+    </script>
+
+    <div class="features">
+      <span>🔒 Без аккаунтов</span>
+      <span>⚡ Мгновенно</span>
+      <span>🗑 Автоочистка 24 ч</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ROOM ===== -->
+<div class="room" id="room">
+  <nav>
+    <div class="logo" onclick="goHome()">⬡ DropPaste</div>
+    <div class="nav-right">
+      <span class="room-code" id="roomCode" title="Код комнаты"></span>
+      <button class="btn-sm" onclick="copyCode()" style="background:rgba(255,255,255,0.06);color:#aaa;">📋 Код</button>
+      <button class="btn-sm btn-ghost" onclick="goHome()">✕ Выйти</button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- FILES -->
+    <section class="panel glass">
+      <div class="panel-title">
+        📁 Файлы
+        <span class="badge" id="fileBadge">0</span>
+      </div>
+
+      <div class="drop-zone" id="dropZone">
+        <div class="icon">⬆️</div>
+        <p>Перетащите файлы или <span class="hl">выберите</span></p>
+        <p style="margin-top:4px;font-size:11px;">До 100 МБ на файл</p>
+      </div>
+      <input type="file" id="fileInput" multiple>
+
+      <div class="items" id="fileList">
+        <div class="empty"><div class="ico">📫</div>Файлов пока нет</div>
+      </div>
+    </section>
+
+    <!-- LINKS -->
+    <section class="panel glass">
+      <div class="panel-title">
+        🔗 Ссылки
+        <span class="badge" id="linkBadge">0</span>
+      </div>
+
+      <div class="row">
+        <input type="text" id="linkTitle" placeholder="Название (необязательно)" style="flex:1;">
+        <input type="url" id="linkUrl" placeholder="https://..." style="flex:1;min-width:0;">
+      </div>
+      <button class="btn-submit" onclick="addLink()" style="width:100%;margin-bottom:14px;">Добавить ссылку</button>
+
+      <div class="items" id="linkList">
+        <div class="empty"><div class="ico">🔗</div>Ссылок пока нет</div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast-msg" id="toast"></div>
+</div>
+
+<script>
+/* ============ STATE ============ */
+const urlParams = new URLSearchParams(window.location.search);
+// Server redirects to /CODE — take it from pathname
+const pathCode = window.location.pathname.replace('/', '').toUpperCase();
+const code = pathCode || urlParams.get('room')?.toUpperCase();
+
+const landing = document.getElementById('landing');
+const room = document.getElementById('room');
+
+function api(c) { return '/' + c; }
+
+/* ============ LANDING / ROOM SWITCH ============ */
+if (!code || code === 'HEALTH') {
+  landing.style.display = 'flex';
+  room.classList.remove('active');
+}
+
+async function createRoom() {
+  const res = await fetch('/api/rooms', { method: 'POST' });
+  if (!res.ok) { toast('Ошибка создания комнаты', 'err'); return; }
+  const data = await res.json();
+  window.location.href = '/' + data.code;
+}
+
+function goHome() {
+  if (confirm('Уйти на главную? Комната останется доступна по тому же адресу 24 ч.')) {
+    window.location.href = '/';
+  }
+}
+
+/* ============ ROOM ============ */
+if (code && code !== 'HEALTH') {
+  landing.style.display = 'none';
+  room.classList.add('active');
+  document.getElementById('roomCode').textContent = code;
+  loadRoom();
+}
+
+let pollTimer;
+
+async function loadRoom() {
+  if (!code) return;
+  const url = api(code);
+  const res = await fetch(url);
+  if (!res.ok) {
+    landing.style.display = 'flex';
+    room.classList.remove('active');
+    toast('Комната не найдена или истекла', 'err');
+    return;
+  }
+  const roomData = await res.json();
+  renderFiles(roomData.files);
+  renderLinks(roomData.links);
+}
+
+// poll every 3s
+if (code && code !== 'HEALTH') {
+  pollTimer = setInterval(loadRoom, 3000);
+  // stop polling when page hidden
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) clearInterval(pollTimer);
+    else pollTimer = setInterval(loadRoom, 3000);
+  });
+}
+
+/* ============ FILES ============ */
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+
+dropZone.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', (e) => { if (e.target.files.length) uploadFiles(e.target.files); e.target.value = ''; });
+
+['dragenter','dragover','dragleave','drop'].forEach(ev =>
+  dropZone.addEventListener(ev, (e) => { e.preventDefault(); e.stopPropagation(); })
+);
+['dragenter','dragover'].forEach(ev =>
+  dropZone.addEventListener(ev, () => dropZone.classList.add('over'))
+);
+['dragleave','drop'].forEach(ev =>
+  dropZone.addEventListener(ev, () => dropZone.classList.remove('over'))
+);
+dropZone.addEventListener('drop', (e) => {
+  if (e.dataTransfer.files.length) uploadFiles(e.dataTransfer.files);
+});
+
+async function uploadFiles(files) {
+  for (const f of files) {
+    const fd = new FormData();
+    fd.append('file', f);
+    toast('Загрузка ' + f.name + '...');
+    const res = await fetch(api(code) + '/files', { method: 'POST', body: fd });
+    if (res.ok) { toast('✓ ' + f.name + ' загружен'); loadRoom(); }
+    else { toast('Ошибка загрузки', 'err'); }
+  }
+}
+
+function renderFiles(files) {
+  const list = document.getElementById('fileList');
+  document.getElementById('fileBadge').textContent = files.length;
+  if (!files.length) {
+    list.innerHTML = '<div class="empty"><div class="ico">📫</div>Файлов пока нет</div>';
+    return;
+  }
+  list.innerHTML = files.map(f => `
+    <div class="item">
+      <div class="item-emoji" style="background:rgba(99,102,241,0.12)">${fileEmoji(f.name,f.type)}</div>
+      <div class="item-body">
+        <div class="item-name" title="${esc(f.name)}">${esc(f.name)}</div>
+        <div class="item-meta">${fmtSize(f.size)}</div>
+      </div>
+      <div class="item-actions">
+        <a class="btn-xs btn-dl" href="${api(code)}/files/${f.id}" download>⬇ Скачать</a>
+        <button class="btn-xs btn-del" onclick="delFile('${f.id}')">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function delFile(id) {
+  if (!confirm('Удалить файл?')) return;
+  await fetch(api(code) + '/files/' + id, { method: 'DELETE' });
+  loadRoom();
+  toast('Файл удалён');
+}
+
+/* ============ LINKS ============ */
+document.getElementById('linkUrl').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') addLink();
+});
+
+async function addLink() {
+  const urlEl = document.getElementById('linkUrl');
+  const titleEl = document.getElementById('linkTitle');
+  const url = urlEl.value.trim();
+  if (!url) return;
+  const res = await fetch(api(code) + '/links', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url, title: titleEl.value.trim() || url })
+  });
+  if (res.ok) {
+    urlEl.value = '';
+    titleEl.value = '';
+    toast('Ссылка добавлена');
+    loadRoom();
+  } else {
+    toast('Ошибка', 'err');
+  }
+}
+
+function renderLinks(links) {
+  const list = document.getElementById('linkList');
+  document.getElementById('linkBadge').textContent = links.length;
+  if (!links.length) {
+    list.innerHTML = '<div class="empty"><div class="ico">🔗</div>Ссылок пока нет</div>';
+    return;
+  }
+  list.innerHTML = links.map(l => `
+    <div class="item">
+      <div class="item-emoji" style="background:rgba(168,85,247,0.12)">🔗</div>
+      <div class="item-body">
+        <div class="item-name"><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.title)}</a></div>
+        <div class="item-meta">${new Date(l.addedAt).toLocaleString('ru')}</div>
+      </div>
+      <div class="item-actions">
+        <a class="btn-xs btn-open" href="${esc(l.url)}" target="_blank" rel="noopener">Открыть</a>
+        <button class="btn-xs btn-del" onclick="delLink('${l.id}')">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function delLink(id) {
+  if (!confirm('Удалить ссылку?')) return;
+  await fetch(api(code) + '/links/' + id, { method: 'DELETE' });
+  loadRoom();
+  toast('Ссылка удалена');
+}
+
+/* ============ UTILS ============ */
+function toast(msg, type) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast-msg show' + (type === 'err' ? ' err' : type === 'ok' ? ' ok' : '');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 2400);
+}
+
+function copyCode() {
+  navigator.clipboard.writeText(code || '');
+  toast('Код скопирован!', 'ok');
+}
+
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+function fileEmoji(name, type) {
+  if (type.startsWith('image/')) return '🖼';
+  if (type.startsWith('video/')) return '🎬';
+  if (type.startsWith('audio/')) return '🎵';
+  if (type.includes('pdf')) return '📄';
+  if (type.includes('zip') || type.includes('rar')) return '📦';
+  if (type.includes('sheet') || type.includes('excel')) return '📊';
+  if (type.includes('doc') || type.includes('word')) return '📝';
+  if (type.includes('presentation')) return '📽';
+  return '📎';
+}
+function fmtSize(b) {
+  if (!b) return '0 Б';
+  if (b < 1024) return b + ' Б';
+  if (b < 1048576) return (b/1024).toFixed(1) + ' КБ';
+  return (b/1048576).toFixed(1) + ' МБ';
+}
+</script>
+</body>
+</html>
