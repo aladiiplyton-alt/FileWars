@@ -74,16 +74,132 @@
     /* Landing */
     .landing {
       min-height: 100vh;
-      display: flex;
+      display: block;
+      padding: 22px;
+      background:
+        radial-gradient(circle at 8% 8%, rgba(20,184,166,0.18), transparent 28%),
+        radial-gradient(circle at 92% 12%, rgba(245,158,11,0.12), transparent 24%),
+        linear-gradient(135deg, #08111f 0%, #101317 54%, #0b1512 100%);
+    }
+    .landing-shell {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+    .learning-top {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: auto minmax(260px, 520px);
+      gap: 16px;
       align-items: center;
+      padding: 12px 0 18px;
+      background: linear-gradient(180deg, rgba(8,17,31,0.96), rgba(8,17,31,0));
+    }
+    .brand-line {
+      color: #f8fafc;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .search-box {
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 14px 16px 14px 42px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 14px;
+      color: #f8fafc;
+      font-size: 15px;
+      outline: none;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.22);
+    }
+    .search-box input:focus {
+      border-color: rgba(45,212,191,0.72);
+      box-shadow: 0 0 0 4px rgba(45,212,191,0.12);
+    }
+    .search-box span {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 16px;
+    }
+    .learning-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+      gap: 24px;
+      align-items: stretch;
+      padding: 28px 0 26px;
+    }
+    .hero-copy {
+      min-height: 330px;
+      display: flex;
+      flex-direction: column;
       justify-content: center;
-      padding: 20px;
+      padding: 44px;
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(15,23,42,0.94), rgba(14,116,144,0.34)),
+        repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 18px);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.28);
+    }
+    .eyebrow {
+      width: fit-content;
+      margin-bottom: 16px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(45,212,191,0.14);
+      color: #5eead4;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .hero-copy h1 {
+      max-width: 760px;
+      color: #f8fafc;
+      font-size: 44px;
+      line-height: 1.02;
+      margin-bottom: 18px;
+    }
+    .hero-copy p {
+      max-width: 680px;
+      color: #cbd5e1;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .stat-pill {
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-pill strong {
+      display: block;
+      color: #f8fafc;
+      font-size: 18px;
+    }
+    .stat-pill span {
+      color: #94a3b8;
+      font-size: 12px;
     }
     .landing-box {
       text-align: center;
       max-width: 480px;
-      padding: 56px 40px;
-      border-radius: 20px;
+      padding: 36px 30px;
+      border-radius: 18px;
     }
     .landing-box .logo-icon { font-size: 56px; margin-bottom: 12px; }
     .landing-box h1 {
@@ -126,6 +242,174 @@
     .features span {
       color: #666;
       font-size: 13px;
+    }
+    .python-section {
+      padding: 8px 0 54px;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin: 10px 0 18px;
+    }
+    .section-head h2 {
+      color: #f8fafc;
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+    .section-head p {
+      color: #94a3b8;
+      line-height: 1.5;
+      max-width: 650px;
+    }
+    .python-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .python-filter {
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      color: #cbd5e1;
+    }
+    .python-filter.active {
+      background: #f59e0b;
+      color: #111827;
+      border-color: #f59e0b;
+      font-weight: 800;
+    }
+    .python-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .python-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 100%;
+      padding: 18px;
+      border-radius: 8px;
+      background: rgba(15,23,42,0.74);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 18px 44px rgba(0,0,0,0.18);
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .card-kind {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(45,212,191,0.14);
+      color: #5eead4;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .card-level {
+      color: #fbbf24;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .python-card h3 {
+      color: #f8fafc;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+    .python-card p {
+      color: #cbd5e1;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .recommendation {
+      padding: 10px 12px;
+      border-left: 3px solid #2dd4bf;
+      background: rgba(45,212,191,0.08);
+      color: #d1fae5;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .module-pill {
+      width: fit-content;
+      padding: 6px 9px;
+      border-radius: 8px;
+      background: rgba(245,158,11,0.13);
+      color: #fcd34d;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .code-sample {
+      margin-top: auto;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #07111f;
+      border: 1px solid rgba(148,163,184,0.18);
+    }
+    .code-sample pre {
+      margin: 0;
+      padding: 12px;
+      overflow: auto;
+      color: #dbeafe;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .does {
+      color: #94a3b8;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .python-empty {
+      display: none;
+      padding: 28px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #cbd5e1;
+      text-align: center;
+    }
+    .python-empty.show {
+      display: block;
+    }
+    @media (max-width: 980px) {
+      .learning-top,
+      .learning-hero {
+        grid-template-columns: 1fr;
+      }
+      .python-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .hero-copy h1 {
+        font-size: 36px;
+      }
+    }
+    @media (max-width: 640px) {
+      .landing {
+        padding: 14px;
+      }
+      .hero-copy {
+        min-height: auto;
+        padding: 26px;
+      }
+      .hero-copy h1 {
+        font-size: 30px;
+      }
+      .quick-stats,
+      .python-grid {
+        grid-template-columns: 1fr;
+      }
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
     }
 
     /* Room */
@@ -294,39 +578,75 @@
 
 <!-- ===== LANDING ===== -->
 <div class="landing" id="landing">
-  <div class="landing-box glass">
-    <div class="logo-icon">⬡</div>
-    <h1>DropPaste</h1>
-    <p class="sub">Обменивайтесь файлами и ссылками между устройствами.
-      <br>Никаких аккаунтов — только 6-значный код.</p>
-    <button class="btn-big" onclick="createRoom()" style="margin-bottom:16px;">
-      Создать комнату
-    </button>
-
-    <div style="color:#555;font-size:13px;margin-bottom:8px;">Или введите код комнаты:</div>
-    <div style="display:flex;gap:8px;justify-content:center;">
-      <input type="text" id="joinCode" placeholder="ABCDEF" maxlength="6"
-        style="width:140px;text-align:center;font-family:monospace;font-size:18px;letter-spacing:4px;
-               padding:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
-               border-radius:10px;color:#e0e0e0;outline:none;">
-      <button class="btn-big" onclick="joinRoom()" style="padding:10px 24px;font-size:14px;">Войти</button>
+  <div class="landing-shell">
+    <div class="learning-top">
+      <div class="brand-line">DropPaste + Python</div>
+      <label class="search-box" for="pythonSearch">
+        <span>⌕</span>
+        <input id="pythonSearch" type="search" placeholder="Искать тему, модуль, пример кода..." autocomplete="off">
+      </label>
     </div>
-    <script>
-      document.getElementById('joinCode').addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') joinRoom();
-      });
-      function joinRoom() {
-        const c = document.getElementById('joinCode').value.trim().toUpperCase();
-        if (c.length === 6) window.location.href = '/' + c;
-      }
-    </script>
 
-    <div class="features">
-      <span>🔒 Без аккаунтов</span>
-      <span>⚡ Мгновенно</span>
-      <span>🗑 Автоочистка 24 ч</span>
-    </div>
+    <section class="learning-hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Сборник Python</span>
+        <h1>Темы, модули, рекомендации и рабочие примеры кода</h1>
+        <p>Здесь собраны основные направления Python: от синтаксиса и функций до веба, данных, автоматизации, ботов и игр. Каждая карточка показывает, зачем тема нужна, какой модуль стоит попробовать и что делает пример программы.</p>
+        <div class="quick-stats">
+          <div class="stat-pill"><strong>20</strong><span>тем и направлений</span></div>
+          <div class="stat-pill"><strong>12</strong><span>полезных модулей</span></div>
+          <div class="stat-pill"><strong>100%</strong><span>комнаты сохранены</span></div>
+        </div>
+      </div>
+
+      <div class="landing-box glass">
+        <div class="logo-icon">⬡</div>
+        <h1>DropPaste</h1>
+        <p class="sub">Обменивайтесь файлами и ссылками между устройствами.
+          <br>Никаких аккаунтов — только 6-значный код.</p>
+        <button class="btn-big" onclick="createRoom()" style="margin-bottom:16px;">
+          Создать комнату
+        </button>
+
+        <div style="color:#94a3b8;font-size:13px;margin-bottom:8px;">Или введите код комнаты:</div>
+        <div style="display:flex;gap:8px;justify-content:center;">
+          <input type="text" id="joinCode" placeholder="ABCDEF" maxlength="6"
+            style="width:140px;text-align:center;font-family:monospace;font-size:18px;letter-spacing:4px;
+                   padding:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+                   border-radius:10px;color:#e0e0e0;outline:none;">
+          <button class="btn-big" onclick="joinRoom()" style="padding:10px 24px;font-size:14px;">Войти</button>
+        </div>
+
+        <div class="features">
+          <span>Без аккаунтов</span>
+          <span>Мгновенно</span>
+          <span>Автоочистка 24 ч</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="python-section" aria-labelledby="pythonTitle">
+      <div class="section-head">
+        <div>
+          <h2 id="pythonTitle">Python-навигатор</h2>
+          <p>Фильтруйте подборку сверху или выберите категорию. Карточки подходят как шпаргалка для учебы и как список идей для небольших программ.</p>
+        </div>
+        <div class="badge" id="pythonCount">0</div>
+      </div>
+
+      <div class="python-filters">
+        <button class="python-filter active" data-python-filter="all">Все</button>
+        <button class="python-filter" data-python-filter="topic">Темы</button>
+        <button class="python-filter" data-python-filter="module">Модули</button>
+        <button class="python-filter" data-python-filter="project">Программы</button>
+        <button class="python-filter" data-python-filter="advice">Рекомендации</button>
+      </div>
+
+      <div class="python-grid" id="pythonResults"></div>
+      <div class="python-empty" id="pythonEmpty">Ничего не найдено. Попробуйте запрос вроде "функции", "парсер", "бот", "pandas" или "игра".</div>
+    </section>
   </div>
+</div>
 </div>
 
 <!-- ===== ROOM ===== -->
@@ -396,9 +716,284 @@ function api(roomCode) {
   return '/api/rooms/' + encodeURIComponent(roomCode);
 }
 
+const pythonKindLabels = {
+  topic: 'Тема',
+  module: 'Модуль',
+  project: 'Программа',
+  advice: 'Совет'
+};
+
+const pythonCards = [
+  {
+    kind: 'topic',
+    level: 'Старт',
+    title: 'Синтаксис, переменные и типы',
+    module: 'без установки',
+    desc: 'База Python: строки, числа, логические значения, ввод и вывод.',
+    recommendation: 'Начните с маленьких программ на 10-20 строк и сразу запускайте код.',
+    code: 'name = "Timur"\nage = 14\nprint(f"{name} учит Python уже {age} дней")',
+    does: 'Создает переменные и выводит аккуратную строку через f-string.'
+  },
+  {
+    kind: 'topic',
+    level: 'Старт',
+    title: 'Условия и циклы',
+    module: 'без установки',
+    desc: 'if, for и while помогают программе принимать решения и повторять действия.',
+    recommendation: 'Тренируйтесь на задачах: проверка пароля, таблица умножения, счетчик попыток.',
+    code: 'for number in range(1, 6):\n    if number % 2 == 0:\n        print(number, "четное")',
+    does: 'Перебирает числа и выводит только те, которые делятся на 2.'
+  },
+  {
+    kind: 'topic',
+    level: 'Старт',
+    title: 'Списки, словари и множества',
+    module: 'collections',
+    desc: 'Главные структуры данных для хранения пользователей, товаров, оценок и настроек.',
+    recommendation: 'Если нужны пары ключ-значение, берите dict; если порядок важен, берите list.',
+    code: 'scores = {"Анна": 5, "Олег": 4}\nscores["Мира"] = 5\nprint(max(scores, key=scores.get))',
+    does: 'Хранит оценки в словаре и находит имя с самым высоким баллом.'
+  },
+  {
+    kind: 'topic',
+    level: 'База',
+    title: 'Функции',
+    module: 'без установки',
+    desc: 'Функции убирают повторение и делают программу понятнее.',
+    recommendation: 'Одна функция должна делать одну понятную вещь и возвращать результат.',
+    code: 'def discount(price, percent):\n    return price - price * percent / 100\n\nprint(discount(1500, 15))',
+    does: 'Считает цену после скидки и возвращает готовое число.'
+  },
+  {
+    kind: 'topic',
+    level: 'База',
+    title: 'Файлы и JSON',
+    module: 'json',
+    desc: 'Чтение и запись настроек, списков задач, простых баз данных и экспортов.',
+    recommendation: 'Для обмена данными между программами чаще всего удобен JSON.',
+    code: 'import json\n\ndata = {"theme": "dark", "items": [1, 2, 3]}\nwith open("settings.json", "w", encoding="utf-8") as f:\n    json.dump(data, f, ensure_ascii=False, indent=2)',
+    does: 'Создает файл settings.json и красиво сохраняет в него данные.'
+  },
+  {
+    kind: 'topic',
+    level: 'База',
+    title: 'Ошибки и исключения',
+    module: 'без установки',
+    desc: 'try/except помогает не ронять программу, когда пользователь ввел не то.',
+    recommendation: 'Ловите конкретные ошибки, а не все подряд, чтобы не прятать настоящие баги.',
+    code: 'try:\n    age = int(input("Возраст: "))\n    print("Через год:", age + 1)\nexcept ValueError:\n    print("Введите число")',
+    does: 'Проверяет ввод и показывает понятное сообщение вместо падения.'
+  },
+  {
+    kind: 'topic',
+    level: 'Средний',
+    title: 'Классы и ООП',
+    module: 'dataclasses',
+    desc: 'Классы помогают описывать объекты: пользователей, комнаты, товары, персонажей.',
+    recommendation: 'Используйте dataclass, когда нужен простой объект с полями.',
+    code: 'from dataclasses import dataclass\n\n@dataclass\nclass User:\n    name: str\n    score: int\n\nprint(User("Timur", 100))',
+    does: 'Создает компактный класс пользователя без лишнего шаблонного кода.'
+  },
+  {
+    kind: 'module',
+    level: 'Полезно',
+    title: 'Requests',
+    module: 'pip install requests',
+    desc: 'Красивый и простой модуль для HTTP-запросов к сайтам и API.',
+    recommendation: 'Подходит для проверки API, загрузки JSON и интеграции сервисов.',
+    code: 'import requests\n\nresponse = requests.get("https://api.github.com")\nprint(response.status_code)\nprint(response.json()["current_user_url"])',
+    does: 'Отправляет GET-запрос к GitHub API и читает JSON-ответ.'
+  },
+  {
+    kind: 'module',
+    level: 'Красивый вывод',
+    title: 'Rich',
+    module: 'pip install rich',
+    desc: 'Делает терминал красивым: таблицы, цвета, панели, прогресс-бары.',
+    recommendation: 'Берите Rich для CLI-программ, логов и демонстраций проектов.',
+    code: 'from rich.console import Console\nfrom rich.table import Table\n\nconsole = Console()\ntable = Table(title="Модули")\ntable.add_column("Имя")\ntable.add_column("Зачем")\ntable.add_row("rich", "красивый терминал")\nconsole.print(table)',
+    does: 'Печатает аккуратную таблицу прямо в терминале.'
+  },
+  {
+    kind: 'module',
+    level: 'CLI',
+    title: 'Typer',
+    module: 'pip install typer',
+    desc: 'Помогает делать удобные консольные команды с аргументами и подсказками.',
+    recommendation: 'Хороший выбор для утилит: генераторы, парсеры, менеджеры файлов.',
+    code: 'import typer\n\napp = typer.Typer()\n\n@app.command()\ndef hello(name: str):\n    print(f"Привет, {name}")\n\napp()',
+    does: 'Создает консольную команду hello с параметром name.'
+  },
+  {
+    kind: 'module',
+    level: 'Веб',
+    title: 'FastAPI',
+    module: 'pip install fastapi uvicorn',
+    desc: 'Современный модуль для API, документации и быстрых backend-сервисов.',
+    recommendation: 'Учите после основ Python, когда захотите делать серверы и приложения.',
+    code: 'from fastapi import FastAPI\n\napp = FastAPI()\n\n@app.get("/ping")\ndef ping():\n    return {"status": "ok"}',
+    does: 'Создает API-роут /ping, который возвращает JSON.'
+  },
+  {
+    kind: 'module',
+    level: 'Данные',
+    title: 'Pandas',
+    module: 'pip install pandas',
+    desc: 'Главный инструмент для таблиц, CSV, аналитики и быстрых расчетов.',
+    recommendation: 'Освойте фильтры, groupby и чтение CSV, этого хватит для первых проектов.',
+    code: 'import pandas as pd\n\ndf = pd.DataFrame({"name": ["A", "B"], "score": [10, 20]})\nprint(df["score"].mean())',
+    does: 'Создает таблицу и считает среднее значение столбца score.'
+  },
+  {
+    kind: 'module',
+    level: 'Графики',
+    title: 'Matplotlib',
+    module: 'pip install matplotlib',
+    desc: 'Строит графики, диаграммы и визуализации для учебы и аналитики.',
+    recommendation: 'Сначала научитесь строить line и bar, затем переходите к сложным графикам.',
+    code: 'import matplotlib.pyplot as plt\n\nplt.plot([1, 2, 3], [2, 5, 4])\nplt.title("Рост")\nplt.show()',
+    does: 'Показывает простой линейный график.'
+  },
+  {
+    kind: 'module',
+    level: 'Автоматизация',
+    title: 'BeautifulSoup',
+    module: 'pip install beautifulsoup4',
+    desc: 'Разбирает HTML и помогает доставать данные со страниц.',
+    recommendation: 'Перед парсингом проверьте правила сайта и не отправляйте слишком много запросов.',
+    code: 'from bs4 import BeautifulSoup\n\nhtml = "<h1>Python</h1><p>Код</p>"\nsoup = BeautifulSoup(html, "html.parser")\nprint(soup.h1.text)',
+    does: 'Находит заголовок h1 в HTML и достает его текст.'
+  },
+  {
+    kind: 'module',
+    level: 'Изображения',
+    title: 'Pillow',
+    module: 'pip install pillow',
+    desc: 'Открывает, меняет размер, обрезает и сохраняет изображения.',
+    recommendation: 'Полезен для аватарок, превью, водяных знаков и пакетной обработки фото.',
+    code: 'from PIL import Image\n\nimg = Image.open("photo.jpg")\nimg.thumbnail((400, 400))\nimg.save("preview.jpg")',
+    does: 'Создает уменьшенную копию изображения.'
+  },
+  {
+    kind: 'project',
+    level: 'Практика',
+    title: 'Генератор паролей',
+    module: 'secrets',
+    desc: 'Небольшая программа для безопасной генерации случайных паролей.',
+    recommendation: 'Для паролей используйте secrets, а не random.',
+    code: 'import secrets\nimport string\n\nalphabet = string.ascii_letters + string.digits + "!@#$%"\npassword = "".join(secrets.choice(alphabet) for _ in range(14))\nprint(password)',
+    does: 'Создает пароль из букв, цифр и специальных символов.'
+  },
+  {
+    kind: 'project',
+    level: 'Практика',
+    title: 'Мини-планировщик задач',
+    module: 'json',
+    desc: 'Хранит список дел в файле и показывает его при запуске.',
+    recommendation: 'Хороший первый проект после списков, функций и файлов.',
+    code: 'import json\n\ntasks = ["выучить функции", "сделать проект"]\nwith open("tasks.json", "w", encoding="utf-8") as f:\n    json.dump(tasks, f, ensure_ascii=False)\nprint("Сохранено задач:", len(tasks))',
+    does: 'Сохраняет список задач в JSON-файл.'
+  },
+  {
+    kind: 'project',
+    level: 'Практика',
+    title: 'Простой Telegram-бот',
+    module: 'pip install aiogram',
+    desc: 'Бот может отвечать на команды, принимать сообщения и запускать сценарии.',
+    recommendation: 'Токен храните в переменных окружения, не вставляйте его прямо в код.',
+    code: 'import os\n\nTOKEN = os.getenv("BOT_TOKEN")\nif not TOKEN:\n    raise RuntimeError("Нужен BOT_TOKEN")\nprint("Бот готов к запуску")',
+    does: 'Показывает безопасный шаблон чтения токена из окружения.'
+  },
+  {
+    kind: 'project',
+    level: 'Игры',
+    title: 'Pygame-окно',
+    module: 'pip install pygame',
+    desc: 'Pygame подходит для 2D-игр, движения объектов и простых аркад.',
+    recommendation: 'Начните с окна, цикла событий и отрисовки одного прямоугольника.',
+    code: 'import pygame\n\npygame.init()\nscreen = pygame.display.set_mode((500, 300))\npygame.display.set_caption("Моя игра")',
+    does: 'Открывает базовое окно для будущей игры.'
+  },
+  {
+    kind: 'advice',
+    level: 'Маршрут',
+    title: 'Как учить Python быстрее',
+    module: 'практика каждый день',
+    desc: 'Порядок: основы, функции, файлы, ошибки, ООП, модули, затем проекты.',
+    recommendation: 'После каждой темы делайте маленькую программу, иначе знания быстро забываются.',
+    code: 'plan = ["основы", "функции", "файлы", "проект"]\nfor step in plan:\n    print("Сегодня:", step)',
+    does: 'Показывает простой учебный маршрут по шагам.'
+  }
+];
+
+let activePythonFilter = 'all';
+
+function setupPythonCollection() {
+  const search = document.getElementById('pythonSearch');
+  const filters = document.querySelectorAll('[data-python-filter]');
+
+  if (search) {
+    search.addEventListener('input', renderPythonCollection);
+  }
+
+  filters.forEach((button) => {
+    button.addEventListener('click', () => {
+      activePythonFilter = button.dataset.pythonFilter;
+      filters.forEach((item) => item.classList.toggle('active', item === button));
+      renderPythonCollection();
+    });
+  });
+
+  renderPythonCollection();
+}
+
+function renderPythonCollection() {
+  const results = document.getElementById('pythonResults');
+  const empty = document.getElementById('pythonEmpty');
+  const count = document.getElementById('pythonCount');
+  const search = document.getElementById('pythonSearch');
+  if (!results) return;
+
+  const query = (search?.value || '').trim().toLowerCase();
+  const cards = pythonCards.filter((card) => {
+    const matchesFilter = activePythonFilter === 'all' || card.kind === activePythonFilter;
+    const haystack = [
+      pythonKindLabels[card.kind],
+      card.level,
+      card.title,
+      card.module,
+      card.desc,
+      card.recommendation,
+      card.code,
+      card.does
+    ].join(' ').toLowerCase();
+    return matchesFilter && (!query || haystack.includes(query));
+  });
+
+  results.innerHTML = cards.map((card) => `
+    <article class="python-card">
+      <div class="card-top">
+        <span class="card-kind">${pythonKindLabels[card.kind]}</span>
+        <span class="card-level">${esc(card.level)}</span>
+      </div>
+      <h3>${esc(card.title)}</h3>
+      <p>${esc(card.desc)}</p>
+      <div class="module-pill">${esc(card.module)}</div>
+      <div class="recommendation">${esc(card.recommendation)}</div>
+      <div class="code-sample"><pre><code>${esc(card.code)}</code></pre></div>
+      <div class="does">${esc(card.does)}</div>
+    </article>
+  `).join('');
+
+  if (count) count.textContent = cards.length + ' из ' + pythonCards.length;
+  if (empty) empty.classList.toggle('show', cards.length === 0);
+}
+
+setupPythonCollection();
+
 /* ============ LANDING / ROOM SWITCH ============ */
 if (!code || code === 'HEALTH') {
-  landing.style.display = 'flex';
+  landing.style.display = 'block';
   room.classList.remove('active');
 }
 
@@ -408,6 +1003,16 @@ async function createRoom() {
   const data = await res.json();
   window.location.href = '/' + data.code;
 }
+
+function joinRoom() {
+  const input = document.getElementById('joinCode');
+  const c = input?.value.trim().toUpperCase();
+  if (c && c.length === 6) window.location.href = '/' + c;
+}
+
+document.getElementById('joinCode')?.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') joinRoom();
+});
 
 function goHome() {
   if (confirm('Уйти на главную? Комната останется доступна по тому же адресу 24 ч.')) {
@@ -430,7 +1035,7 @@ async function loadRoom() {
   try {
     const res = await fetch(api(code));
   if (!res.ok) {
-    landing.style.display = 'flex';
+    landing.style.display = 'block';
     room.classList.remove('active');
     toast('Комната не найдена или истекла', 'err');
     return;
